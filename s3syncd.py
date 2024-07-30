@@ -53,4 +53,4 @@ if __name__ == "__main__":
   
   print(sys.argv)
 
-#   sync_directory_to_s3(local_dir, bucket_name, prefix, credentials_file)
+  sync_directory_to_s3(local_dir, bucket_name, prefix, credentials_file)
