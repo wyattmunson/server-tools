@@ -1,6 +1,7 @@
 import boto3
 import os
 import json
+import sys
 
 def load_credentials(credentials_file):
   """Loads AWS credentials from a JSON file."""
@@ -40,9 +41,16 @@ def sync_directory_to_s3(local_dir, bucket_name, prefix='', credentials_file='cr
         print(f"Error uploading {local_path}: {e}")
 
 if __name__ == "__main__":
-  local_dir = '/home/mainframe/k3s-workspace'
+  args = sys.argv
+  if len(args) < 2:
+      print("ERR: Required arguments not provided")
+      print("ERR: Use command format: s3syncd.py SOURCE_PATH S3_PREFIX")
+      exit(1)
+  local_dir = args[1]
   bucket_name = 'wycloud-backup'
-  prefix = 'theflame/k3s-workspace-backup'  # Optional
+  prefix = args[2]
   credentials_file = '/home/mainframe/.creds/aws.json'
+  
+  print(sys.argv)
 
-  sync_directory_to_s3(local_dir, bucket_name, prefix, credentials_file)
+#   sync_directory_to_s3(local_dir, bucket_name, prefix, credentials_file)
